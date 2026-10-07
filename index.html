@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKzta // KEY HUB</title>
+    <style>
+        /* RESET & NỀN TỐI KIỂU HACKER */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b0f0c;
+            background-image: 
+                linear-gradient(rgba(0, 255, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 0, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* HIỆU ỨNG QUÉT MÀN HÌNH */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15) 0px,
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* CONTAINER CHÍNH */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(0, 20, 0, 0.75);
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            padding: 35px 30px;
+            box-shadow: 
+                0 0 15px rgba(0, 255, 65, 0.3),
+                inset 0 0 30px rgba(0, 255, 65, 0.05);
+            backdrop-filter: blur(2px);
+            position: relative;
+            z-index: 5;
+            animation: flicker 4s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; }
+            93% { opacity: 0.85; }
+            94% { opacity: 1; }
+            97% { opacity: 0.92; }
+            98% { opacity: 1; }
+        }
+
+        /* TIÊU ĐỀ */
+        .title {
+            text-align: center;
+            color: #00ff41;
+            font-size: 1.6rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 8px #00ff41;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #00aa2a;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed #00ff4155;
+            padding-bottom: 15px;
+        }
+
+        /* DẤU NHẬN DẠNG */
+        .blink {
+            animation: blink-anim 1s step-start infinite;
+        }
+
+        @keyframes blink-anim {
+            50% { opacity: 0; }
+        }
+
+        /* KHUNG CHỨA KEY */
+        .key-area {
+            margin: 30px 0;
+        }
+
+        .key-label {
+            color: #00ff41;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .key-label::before {
+            content: ">";
+            color: #00ff41;
+            font-weight: bold;
+        }
+
+        .key-box {
+            display: flex;
+            align-items: stretch;
+            border: 1px solid #00ff41;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .key-display {
+            flex: 1;
+            padding: 18px 20px;
+            color: #00ff41;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            background: #050505;
+            border: none;
+            outline: none;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 6px #00ff4188;
+            white-space: nowrap;
+            overflow-x: auto;
+            cursor: text;
+        }
+
+        .key-display::selection {
+            background: #00ff41;
+            color: #000;
+        }
+
+        .copy-btn {
+            background: #00ff41;
+            border: none;
+            color: #000;
+            padding: 0 28px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: #00cc33;
+            box-shadow: 0 0 15px #00ff41;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.96);
+        }
+
+        .copy-btn.copied {
+            background: #003300;
+            color: #00ff41;
+            box-shadow: inset 0 0 10px #00ff41;
+        }
+
+        /* THÔNG BÁO */
+        .status {
+            margin-top: 12px;
+            color: #00cc33;
+            font-size: 0.85rem;
+            min-height: 20px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .status .ok {
+            color: #00ff41;
+            font-weight: bold;
+        }
+
+        /* HƯỚNG DẪN */
+        .hint {
+            background: rgba(0, 255, 65, 0.05);
+            border-left: 3px solid #00ff41;
+            padding: 15px 18px;
+            margin-top: 25px;
+            color: #00aa2a;
+            font-size: 0.82rem;
+            line-height: 1.7;
+        }
+
+        .hint strong {
+            color: #00ff41;
+        }
+
+        /* CHỮ IKzta GÓC PHẢI */
+        .brand {
+            position: fixed;
+            bottom: 18px;
+            right: 22px;
+            color: #00ff41;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-shadow: 0 0 8px #00ff41, 0 0 20px #00ff4188;
+            font-weight: bold;
+            z-index: 20;
+            opacity: 0.9;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .brand:hover {
+            text-shadow: 0 0 15px #00ff41, 0 0 40px #00ff41;
+            color: #7fff9f;
+        }
+
+        /* IKzta watermark giữa màn hình mờ */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-25deg);
+            font-size: 18vw;
+            color: rgba(0, 255, 65, 0.02);
+            font-weight: bold;
+            letter-spacing: 15px;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1;
+            user-select: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .container { padding: 25px 18px; }
+            .title { font-size: 1.2rem; letter-spacing: 2px; }
+            .key-display { font-size: 0.95rem; padding: 14px 12px; letter-spacing: 1px; }
+            .copy-btn { padding: 0 16px; font-size: 0.85rem; }
+            .brand { font-size: 0.85rem; bottom: 12px; right: 14px; letter-spacing: 2px; }
+            .watermark { font-size: 30vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- WATERMARK MỜ IKzta GIỮA MÀN HÌNH -->
+    <div class="watermark">IKzta</div>
+
+    <div class="container">
+        <div class="title">
+            <span class="blink">_</span> IKzta KEY HUB
+        </div>
+        <div class="subtitle">// SECURE KEY DISTRIBUTION SYSTEM v2.0</div>
+
+        <div class="key-area">
+            <div class="key-label">YOUR KEY IS READY:</div>
+            <div class="key-box">
+                <!-- 
+                    ▼▼▼ CHỈNH KEY TẠI ĐÂY ▼▼▼
+                    Thay đổi nội dung trong thẻ input bên dưới.
+                    Giá trị "value" chính là key sẽ hiển thị và sao chép.
+                -->
+                <input type="text" 
+                       id="keyInput" 
+                       class="key-display" 
+                       value="ikzta:code:sieu:aura" 
+                       readonly 
+                       spellcheck="false">
+                <!-- ▲▲▲ KẾT THÚC CHỈNH KEY ▲▲▲ -->
+                <button class="copy-btn" id="copyBtn" onclick="copyKey()">COPY</button>
+            </div>
+            <div class="status" id="status">> Nhấn COPY để sao chép key vào clipboard...</div>
+        </div>
+
+        <div class="hint">
+            <strong>[ HƯỚNG DẪN ]</strong><br>
+            • Key đã được tạo sẵn trong ô phía trên.<br>
+            • Nhấn nút <strong>COPY</strong> để sao chép toàn bộ key.<br>
+            • Dán (Ctrl+V) vào nơi cần sử dụng.<br>
+            • <strong>Lưu ý:</strong> Key chỉ có hiệu lực một lần — hãy dùng ngay!
+        </div>
+    </div>
+
+    <!-- CHỮ IKzta GÓC PHẢI DƯỚI -->
+    <div class="brand">IKzta</div>
+
+    <script>
+        function copyKey() {
+            const keyInput = document.getElementById('keyInput');
+            const statusEl = document.getElementById('status');
+            const btn = document.getElementById('copyBtn');
+
+            // Chọn nội dung
+            keyInput.select();
+            keyInput.setSelectionRange(0, 99999); // cho mobile
+
+            // Thực hiện copy
+            try {
+                navigator.clipboard.writeText(keyInput.value).then(() => {
+                    // Thành công
+                    statusEl.innerHTML = '> <span class="ok">[✔] ĐÃ SAO CHÉP KEY THÀNH CÔNG!</span> — Dán vào nơi cần dùng.';
+                    btn.textContent = 'COPIED!';
+                    btn.classList.add('copied');
+
+                    // Reset sau 2.5 giây
+                    setTimeout(() => {
+                        btn.textContent = 'COPY';
+                        btn.classList.remove('copied');
+                        statusEl.innerHTML = '> Nhấn COPY để sao chép key vào clipboard...';
+                    }, 2500);
+                }).catch(() => {
+                    // Fallback dùng execCommand
+                    fallbackCopy(keyInput, statusEl, btn);
+                });
+            } catch (err) {
+                fallbackCopy(keyInput, statusEl, btn);
+            }
+        }
+
+        function fallbackCopy(keyInput, statusEl, btn) {
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    statusEl.innerHTML = '> <span class="ok">[✔] ĐÃ SAO CHÉP KEY THÀNH CÔNG!</span>';
+                    btn.textContent = 'COPIED!';
+                    btn.classList.add('copied');
+                } else {
+                    statusEl.innerHTML = '> <span style="color:#ff5555;">[✘] Không thể sao chép. Hãy chọn thủ công.</span>';
+                }
+            } catch (e) {
+                statusEl.innerHTML = '> <span style="color:#ff5555;">[✘] Lỗi sao chép. Hãy chọn thủ công.</span>';
+            }
+
+            setTimeout(() => {
+                btn.textContent = 'COPY';
+                btn.classList.remove('copied');
+            }, 2500);
+        }
+
+        // Hiệu ứng gõ chữ cho status ban đầu
+        window.addEventListener('load', () => {
+            const statusEl = document.getElementById('status');
+            const msg = '> Nhấn COPY để sao chép key vào clipboard...';
+            let i = 0;
+            statusEl.textContent = '';
+            const typeInterval = setInterval(() => {
+                if (i < msg.length) {
+                    statusEl.textContent += msg.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typeInterval);
+                }
+            }, 30);
+        });
+
+        // Cho phép click vào input là tự động chọn hết
+        document.getElementById('keyInput').addEventListener('click', function() {
+            this.select();
+        });
+    </script>
+
+</body>
+</html>
